@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import javax.swing.Timer;
+import java.util.Random;
 
 
 public class Gameplay extends JPanel implements KeyListener, ActionListener {
@@ -19,8 +20,13 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener {
     private int playerX = 310;
     private int ballposX = 120;
     private int ballposY = 350;
-    private int ballXdir = -1;
-    private int ballYdir = -2;
+    public static Random rand = new Random();
+    public static int randomNumber(int lowerBound, int upperBound) {
+        return rand.nextInt((upperBound - lowerBound) + 1) + lowerBound;
+    }
+    private int ballXdir = - randomNumber(1, 4);
+    private int ballYdir = - randomNumber(1, 4);
+
 
     private MapGenerator map;
 
@@ -90,6 +96,19 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener {
 
     }
 
+    public void restart(){
+        play = true;
+        ballposX = 120;
+        ballposY = 350;
+        ballXdir = - randomNumber(1, 4);
+        ballYdir = - randomNumber(1, 4);
+        playerX = 310;
+        score = 0;
+        totalBricks = 21;
+        map = new MapGenerator( 3,  7);
+        repaint();
+
+    }
     @Override
     public void keyPressed(KeyEvent e) {
         if(e.getKeyCode() == KeyEvent.VK_RIGHT){// To detect if we press the right key
@@ -108,16 +127,7 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener {
         }
         if(e.getKeyCode() == KeyEvent.VK_ENTER){
             if(!play){
-                play = true;
-                ballposX = 120;
-                ballposY = 350;
-                ballXdir = -1;
-                ballYdir = -2;
-                playerX = 310;
-                score = 0;
-                totalBricks = 21;
-                map = new MapGenerator(3, 7 );
-                repaint();
+                restart();
             }
         }
     }
@@ -205,6 +215,10 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener {
     }
 
 
-
-
+    public int getBallYdir() {
+        return ballYdir;
+    }
+    public int getBallXdir(){
+        return ballXdir;
+    }
 }
