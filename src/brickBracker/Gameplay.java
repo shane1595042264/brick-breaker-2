@@ -17,7 +17,6 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener {
     private int delay = 8;
 
     private int playerX = 310;
-
     private int ballposX = 120;
     private int ballposY = 350;
     private int ballXdir = -1;
@@ -48,6 +47,11 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener {
         g.fillRect(0, 0, 692, 3);
         g.fillRect(691, 0, 3, 592);
         // no border for bottom because we need a slider to bounce the ball.
+
+        //score
+        g.setColor(Color.white);
+        g.setFont(new Font("serif", Font.BOLD, 25));
+        g.drawString("" + score, 590, 30);
         // the paddle
         g.setColor(Color.GREEN);
         g.fillRect(playerX, 550, 100, 8);
@@ -55,6 +59,33 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener {
         g.setColor(Color.YELLOW);
         g.fillOval(ballposX, ballposY, 20, 20);
 
+        //win?
+        if(totalBricks <=0){
+            play = false;
+            ballXdir = 0;
+            ballYdir = 0;
+            g.setColor(Color.red);
+            g.setFont(new Font("TimesRoman", Font.BOLD, 30));
+            g.drawString("You won! " + score, 190, 300);
+
+            g.setColor(Color.red);
+            g.setFont(new Font("TimesRoman", Font.BOLD, 20));
+            g.drawString("Press Enter to restart the game", 230, 350);
+        }
+
+        //missing ball gg
+        if(ballposY > 570){
+            play = false;
+            ballXdir = 0;
+            ballYdir = 0;
+            g.setColor(Color.red);
+            g.setFont(new Font("TimesRoman", Font.BOLD, 30));
+            g.drawString("Game Over! Scores: " + score, 190, 300);
+
+            g.setColor(Color.red);
+            g.setFont(new Font("TimesRoman", Font.BOLD, 20));
+            g.drawString("Press Enter to restart the game", 230, 350);
+        }
         g.dispose();
 
     }
@@ -73,6 +104,20 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener {
                 playerX = 10;
             }else{
                 moveLeft();
+            }
+        }
+        if(e.getKeyCode() == KeyEvent.VK_ENTER){
+            if(!play){
+                play = true;
+                ballposX = 120;
+                ballposY = 350;
+                ballXdir = -1;
+                ballYdir = -2;
+                playerX = 310;
+                score = 0;
+                totalBricks = 21;
+                map = new MapGenerator(3, 7 );
+                repaint();
             }
         }
     }
@@ -99,7 +144,43 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener {
             if(new Rectangle(ballposX, ballposY, 20, 20).intersects(new Rectangle(playerX, 550, 100, 8))){
                 ballYdir =  -ballYdir;
             }
+            A: for(int i = 0; i<map.map.length;i++){// the first map is the class declared above
+                // the second map is the actual array
+                for(int j = 0; j<map.map[0].length;j++){
+                    if (map.map[i][j]>0){
+                        int brickX = j*map.brickWidth+80;
+                        int brickY = i*map.brickHeight+50;
+                        int brickWidth = map.brickWidth;
+                        int brickHeight = map.brickHeight;
+                        // these variables are declared for later construction of rectangle parameters
 
+                        Rectangle rect = new Rectangle(brickX,brickY,brickWidth,brickHeight);
+                        Rectangle ballRect = new Rectangle(ballposX, ballposY, 20, 20);
+                        Rectangle brickRect = rect;
+                        //collision of bricks happen
+                        if(ballRect.intersects(brickRect)){
+                            map.setBrickValue(0, i, j);
+                            totalBricks--;
+                            score += 5;
+
+                            if(ballposX + 19 <= brickRect.x|| ballposX +1>= brickRect.x + brickRect.width){
+                                // in this situation, the ball crushes on the side of the brick, so we need to bounce
+                                // off horizontally.
+                                ballXdir = -ballXdir;
+                            }else{
+                                ballYdir = -ballYdir;
+                            }
+                            break A;//yep, so that we don't have to unnecessarily check all the blocks again.
+
+
+
+                        }
+
+                    }
+                }
+
+
+            }
             ballposX += ballXdir;
             ballposY += ballYdir;
             if(ballposX <= 0){
