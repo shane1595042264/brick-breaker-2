@@ -1,3 +1,5 @@
+Watch this game playthrough video to get the concept of this game:
+https://youtu.be/6_bg8G2wHC4
 
 # Project Summary
 
