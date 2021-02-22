@@ -32,7 +32,7 @@ Gameplay gameplay = new Gameplay();
 
 obj.setBounds(10, 10, 700, 600);
 
-obj.setTitle(&quot;BALL Breaker&quot;);
+obj.setTitle("BALL Breaker");
 
 obj.setResizable(false);
 
@@ -143,7 +143,7 @@ For Timer:
 
 [https://docs.oracle.com/javase/tutorial/uiswing/misc/timer.html#:~:text=A%20Swing%20timer%20(an%20instance,timer%20facility%20in%20the%20java.&amp;text=For%20example%2C%20the%20tool%20tip,and%20when%20to%20hide%20it](https://docs.oracle.com/javase/tutorial/uiswing/misc/timer.html#:~:text=A%20Swing%20timer%20(an%20instance,timer%20facility%20in%20the%20java.&amp;text=For%20example%2C%20the%20tool%20tip,and%20when%20to%20hide%20it).
 
-In short, the timer will repeat the task &quot;this&quot; with the interval int &quot;delay&quot;.
+In short, the timer will repeat the task "this" with the interval int "delay".
 
 ## **paint()**
 
@@ -175,9 +175,9 @@ g.fillRect(691, 0, 3, 592);
 
 g.setColor(Color.white);
 
-g.setFont(new Font(&quot;serif&quot;, Font.BOLD, 25));
+g.setFont(new Font("serif", Font.BOLD, 25));
 
-g.drawString(&quot;&quot; + score, 590, 30);
+g.drawString("" + score, 590, 30);
 
 // the paddle
 
@@ -209,7 +209,7 @@ If you miss a ball, you got this:
 
 ```
 
-if(ballposY \&gt; 570){
+if(ballposY > 570){
 
 play = false;
 
@@ -219,15 +219,15 @@ ballYdir = 0;
 
 g.setColor(Color.red);
 
-g.setFont(new Font(&quot;TimesRoman&quot;, Font.BOLD, 30));
+g.setFont(new Font("TimesRoman", Font.BOLD, 30));
 
-g.drawString(&quot;Game Over! Scores: &quot; + score, 190, 300);
+g.drawString("Game Over! Scores: " + score, 190, 300);
 
 g.setColor(Color.red);
 
-g.setFont(new Font(&quot;TimesRoman&quot;, Font.BOLD, 20));
+g.setFont(new Font("TimesRoman", Font.BOLD, 20));
 
-g.drawString(&quot;Press Enter to restart the game&quot;, 230, 350);
+g.drawString("Press Enter to restart the game", 230, 350);
 
 }
 
@@ -237,7 +237,7 @@ If you win, you got this:
 
 ```
 
-if(totalBricks \&lt;=0){
+if(totalBricks <=0){
 
 play = false;
 
@@ -247,15 +247,15 @@ ballYdir = 0;
 
 g.setColor(Color.red);
 
-g.setFont(new Font(&quot;TimesRoman&quot;, Font.BOLD, 30));
+g.setFont(new Font("TimesRoman", Font.BOLD, 30));
 
-g.drawString(&quot;You won! &quot; + score, 190, 300);
+g.drawString("You won! " + score, 190, 300);
 
 g.setColor(Color.red);
 
-g.setFont(new Font(&quot;TimesRoman&quot;, Font.BOLD, 20));
+g.setFont(new Font("TimesRoman", Font.BOLD, 20));
 
-g.drawString(&quot;Press Enter to restart the game&quot;, 230, 350);
+g.drawString("Press Enter to restart the game", 230, 350);
 
 }
 
@@ -271,7 +271,7 @@ public void keyPressed(KeyEvent e) {
 
 if(e.getKeyCode() == KeyEvent.VK\_RIGHT){// To detect if we press the right key
 
-if(playerX \&gt;= 600){//To prevent player from moving outside the bound
+if(playerX >= 600){//To prevent player from moving outside the bound
 
 playerX = 600;
 
@@ -285,7 +285,7 @@ moveRight();
 
 if(e.getKeyCode() == KeyEvent.VK\_LEFT){// To detect if we press the left key
 
-if(playerX \&lt;= 10){//To prevent player from moving outside the bound
+if(playerX <= 10){//To prevent player from moving outside the bound
 
 playerX = 10;
 
@@ -405,19 +405,19 @@ ballposX += ballXdir;
 
 ballposY += ballYdir;
 
-if(ballposX \&lt;= 0){
+if(ballposX <= 0){
 
 ballXdir = -ballXdir; // so the ball bounds back
 
 }
 
-if(ballposY \&lt;= 0){
+if(ballposY <= 0){
 
 ballYdir = -ballYdir;
 
 }
 
-if(ballposX \&gt;= 670){
+if(ballposX >= 670){
 
 ballXdir = -ballXdir; // so the ball bounds back
 
@@ -445,13 +445,13 @@ Use intersects method to detect if they collide, and then bounce off again.
 
 ```
 
-A: for(int i = 0; i\&lt;map.map.length;i++){// the first map is the class declared above
+A: for(int i = 0; i<map.map.length;i++){// the first map is the class declared above
 
 // the second map is the actual array
 
-for(int j = 0; j\&lt;map.map[0].length;j++){
+for(int j = 0; j<map.map[0].length;j++){
 
-if (map.map[i][j]\&gt;0){
+if (map.map[i][j]>0){
 
 int brickX = j\*map.brickWidth+80;
 
@@ -479,7 +479,7 @@ totalBricks--;
 
 score += 5;
 
-if(ballposX + 19 \&lt;= brickRect.x|| ballposX +1\&gt;= brickRect.x + brickRect.width){
+if(ballposX + 19 <= brickRect.x|| ballposX +1>= brickRect.x + brickRect.width){
 
 // in this situation, the ball crushes on the side of the brick, so we need to bounce
 
@@ -522,9 +522,9 @@ public MapGenerator(int row, int col){
 
 map = new int[row][col];
 
-for(int i = 0; i \&lt; map.length; i++){
+for(int i = 0; i < map.length; i++){
 
-for (int j = 0; j \&lt; map[0].length; j++){
+for (int j = 0; j < map[0].length; j++){
 
 map[i][j] = 1;
 
@@ -548,11 +548,11 @@ public void draw(Graphics2D g){
 
 //draw a brick wherever there&#39;s a position of 1
 
-for(int i = 0; i \&lt; map.length; i++){
+for(int i = 0; i < map.length; i++){
 
-for (int j = 0; j \&lt; map[0].length; j++){
+for (int j = 0; j < map[0].length; j++){
 
-if(map[i][j] \&gt; 0){
+if(map[i][j] > 0){
 
 g.setColor(Color.WHITE);
 
